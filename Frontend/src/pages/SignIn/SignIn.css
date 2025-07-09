@@ -1,0 +1,133 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Page Layout */
+  .page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e6f2ff; /* Light blue background */
+  }
+  
+  /* Form Styling */
+  .form-container {
+    background-color: #fff;
+    padding: 3rem; /* Increased padding */
+    border-radius: 12px; /* Slightly more rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Larger form */
+  }
+  
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem; /* Larger heading */
+    color: #003366; /* Dark blue for the heading */
+  }
+  
+  .input-group {
+    margin-bottom: 2rem; /* Increased spacing between inputs */
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 1.2rem; /* Larger padding */
+    border: 1px solid #ccd9ff; /* Light blue border */
+    border-radius: 8px; /* Larger border radius */
+    font-size: 1.2rem; /* Bigger text */
+    color: #333;
+  }
+  
+  .input-group input:focus {
+    border-color: #005bb5; /* Blue border on focus */
+    outline: none;
+  }
+  
+  .button {
+    width: 100%;
+    padding: 1.4rem; /* Bigger button */
+    background-color: #005bb5; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 8px; /* Rounded corners for button */
+    font-size: 1.3rem; /* Larger button text */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #003366; /* Darker blue on hover */
+  }
+  
+  /* Additional links */
+  .links {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  
+  .links a {
+    text-decoration: none;
+    color: #005bb5; /* Blue for the links */
+    margin-left: 0.7rem; /* Spacing between links */
+    font-size: 1.1rem; /* Bigger text for links */
+  }
+  
+  .links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .form-container {
+      width: 90%;
+      padding: 2rem; /* Slightly smaller padding for smaller screens */
+    }
+  
+    .form-container h2 {
+      font-size: 2rem; /* Slightly smaller heading on mobile */
+    }
+  
+    .input-group input {
+      font-size: 1rem; /* Smaller font size on mobile */
+    }
+  
+    .button {
+      font-size: 1.1rem; /* Smaller button text on mobile */
+    }
+  
+    .links a {
+      font-size: 1rem; /* Smaller font size for links on mobile */
+    }
+  }
+
+  /* Button.css */
+.auth-btn {
+  padding: 0.5rem 1.2rem;
+  background-color: #2563eb; /* Tailwind Blue-600 */
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.15);
+}
+
+.auth-btn:hover {
+  background-color: #1d4ed8; /* Tailwind Blue-700 */
+  transform: translateY(-1px);
+}
+
+.auth-btn:active {
+  background-color: #1e40af; /* Tailwind Blue-800 */
+  transform: translateY(0);
+}

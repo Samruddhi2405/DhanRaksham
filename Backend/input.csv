@@ -1,0 +1,2 @@
+age,income,dependents,occupation,city_tier,healthcare,bmi,blood_pressure,smoker,diabetic,region,children
+35,800000,2,engineer,tier1,50000,23.5,120,no,no,north,2

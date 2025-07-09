@@ -1,0 +1,64 @@
+.budget-container {
+    font-family: Arial, sans-serif;
+    background-color: white;
+    min-height: 90vh;
+    padding: 0;
+  }
+  
+  .budget-box {
+    max-width: 1000px;
+    margin: 30px auto; 
+    padding: 0 20px; 
+    margin-top: 50px;
+  }
+  
+  .section {
+    margin-top: 40px;
+  }
+  
+  .section h3 {
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+    color: #0056b3;
+  }
+  
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .row {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    margin-bottom: 6px;
+    font-weight: bold;
+  }
+  
+  input,
+  select {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .optimize-button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 60px auto 0; /* Top space & center horizontally */
+    display: block;
+  }
+  
+  .optimize-button:hover {
+    background-color: #0056b3;
+  }
+  
