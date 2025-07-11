@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import InsuranceAdvisor from './pages/InsuranceAdvisor/InsuranceAdvisor';
 import ScrollToTop from './components/ScrollToTop';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
               <Route path="/stock" element={<Stock />} />
               <Route path="/insurance" element={<InsuranceAdvisor />} />
               <Route path="/chatbot" element={<Chatbot />} />
+              <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
             <Footer />
           </main>

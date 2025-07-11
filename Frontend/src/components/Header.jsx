@@ -35,26 +35,29 @@ export const Header = () => {
         <ul className="nav-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#features">Features</a></li>
-          <li><a href="#market">Markets</a></li>
-          <li><a href="#insurance">Insurance</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#contact">Contact</a></li>
 
           {user ? (
-            <li className="profile-section">
-              <div
-                className="profile-avatar"
-                onClick={() => setShowDropdown(!showDropdown)}
-                title={user.email}
-              >
-                {user.email[0].toUpperCase()}
-              </div>
-              {showDropdown && (
-                <div className="dropdown-menu">
-                  <button onClick={handleLogout}>Logout</button>
+            <>
+              <li>
+                <a href="/dashboard">Dashboard</a>
+              </li>
+              <li className="profile-section">
+                <div
+                  className="profile-avatar"
+                  onClick={() => setShowDropdown(!showDropdown)}
+                  title={user.email}
+                >
+                  {user.email[0].toUpperCase()}
                 </div>
-              )}
-            </li>
+                {showDropdown && (
+                  <div className="dropdown-menu">
+                    <button onClick={handleLogout}>Logout</button>
+                  </div>
+                )}
+              </li>
+            </>
           ) : (
             <>
               <li className="nav-btn">

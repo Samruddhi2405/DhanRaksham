@@ -19,7 +19,7 @@ export const Home = () => {
       </section>
 
       {/* Services Section */}
-      <section className="services">
+      <section className="services" id="features">
         <div className="section-header">
           <h2 className="section-title">Services We Provide</h2>
           <p className="section-subtitle">
@@ -90,7 +90,7 @@ export const Home = () => {
       </section>
 
       {/* Call to Action */}
-      <section className="call-to-action">
+      <section className="call-to-action" id="contact">
         <h2 className="cta-title">Have questions? Shoot us an email!</h2>
         <p className="cta-description">
           For any inquiries, collaborations, or support, please feel free to contact us. We look forward to connecting with you.
@@ -98,7 +98,7 @@ export const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="testimonials">
+      <section className="testimonials" id="about">
         <div className="section-header">
           <h2 className="section-title">About Us</h2>
           <p className="section-subtitle">Meet the Minds Behind the Mission to Simplify Finance for Everyone.</p>
