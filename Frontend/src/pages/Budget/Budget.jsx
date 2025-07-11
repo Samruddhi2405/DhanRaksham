@@ -1,272 +1,149 @@
 import React, { useState } from 'react';
 import './Budget.css';
-import axios from 'axios';
+
+const defaultCategories = [
+  { name: 'Rent', amount: '' },
+  { name: 'Groceries', amount: '' },
+  { name: 'Transport', amount: '' },
+  { name: 'Utilities', amount: '' },
+  { name: 'Insurance', amount: '' },
+  { name: 'Entertainment', amount: '' },
+];
+
+function getBudgetSummary(income, categories) {
+  const total = Number(income) || 0;
+  const totalExpenses = categories.reduce((sum, cat) => sum + Number(cat.amount || 0), 0);
+  const remaining = total - totalExpenses;
+  const percentSaved = total ? (remaining / total) * 100 : 0;
+  const invest = Math.max(0, Math.floor(remaining * 0.5));
+  const emergency = Math.max(0, Math.floor(remaining * 0.3));
+  const leisure = Math.max(0, remaining - invest - emergency);
+
+  // Suggestions
+  const suggestions = [];
+  if (percentSaved >= 20) {
+    suggestions.push("Great job! You're saving a healthy portion of your income. Consider investing and building your emergency fund.");
+  } else if (percentSaved > 0) {
+    suggestions.push("You're saving some money, but try to increase your savings to at least 20% of your income.");
+  } else {
+    suggestions.push("Warning: You're spending more than you earn. Review your expenses and try to cut back on non-essential items.");
+  }
+  if (invest > 0) {
+    suggestions.push(`Consider investing ₹${invest.toLocaleString()} for long-term growth (e.g., SIPs, mutual funds).`);
+  }
+  if (emergency > 0) {
+    suggestions.push(`Set aside ₹${emergency.toLocaleString()} for your emergency fund (aim for 3-6 months of expenses).`);
+  }
+  if (leisure > 0) {
+    suggestions.push(`You can use ₹${leisure.toLocaleString()} for leisure or short-term goals, but spend wisely!`);
+  }
+  suggestions.push("Tip: Track your expenses regularly and review your budget every month.");
+
+  return {
+    totalExpenses,
+    remaining,
+    percentSaved,
+    invest,
+    emergency,
+    leisure,
+    suggestions
+  };
+}
 
 const Budget = () => {
-  const [formData, setFormData] = useState({
-    dependents: '',
-    occupation: 'Student',
-    cityTier: 'Tier_1',
-    rent: '',
-    loanRepayment: '',
-    insurance: ''
-  });
+  const [income, setIncome] = useState('');
+  const [categories, setCategories] = useState(defaultCategories);
+  const [showSummary, setShowSummary] = useState(false);
+  const [summary, setSummary] = useState(null);
 
-  const [optimizationResult, setOptimizationResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+  const handleCategoryChange = (index, field, value) => {
+    const updated = [...categories];
+    updated[index][field] = value;
+    setCategories(updated);
   };
 
-  const handleSubmit = async (e) => {
+  const addCategory = () => {
+    setCategories([...categories, { name: '', amount: '' }]);
+  };
+
+  const removeCategory = (index) => {
+    setCategories(categories.filter((_, i) => i !== index));
+  };
+
+  const handleOptimize = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setOptimizationResult(null);
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/budget/optimize', formData);
-      setOptimizationResult(response.data);
-    } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred while optimizing your budget');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0
-    }).format(amount);
+    const summaryData = getBudgetSummary(income, categories);
+    setSummary(summaryData);
+    setShowSummary(true);
   };
 
   return (
     <div className="budget-container">
       <div className="budget-box">
-        <h2>FinanceOptimizer</h2>
-
-        <form onSubmit={handleSubmit}>
+        <h2>Budget Optimizer</h2>
+        <form onSubmit={handleOptimize}>
           <div className="section">
-            <h3>Personal Status</h3>
-            <div className="grid-3">
-              <div className="row">
-                <label>Number of Dependents</label>
-                <input 
-                  type="number" 
-                  name="dependents"
-                  value={formData.dependents}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-              <div className="row">
-                <label>Occupation</label>
-                <select 
-                  name="occupation"
-                  value={formData.occupation}
-                  onChange={handleInputChange}
-                >
-                  <option value="Student">Student</option>
-                  <option value="Employee">Employee</option>
-                  <option value="Freelancer">Freelancer</option>
-                </select>
-              </div>
-              <div className="row">
-                <label>City Tier</label>
-                <select 
-                  name="cityTier"
-                  value={formData.cityTier}
-                  onChange={handleInputChange}
-                >
-                  <option value="Tier_1">Tier 1</option>
-                  <option value="Tier_2">Tier 2</option>
-                  <option value="Tier_3">Tier 3</option>
-                </select>
-              </div>
-            </div>
+            <label>Monthly Income</label>
+            <input
+              type="number"
+              value={income}
+              onChange={e => setIncome(e.target.value)}
+              required
+              placeholder="Enter your monthly income"
+            />
           </div>
-
           <div className="section">
-            <h3>Monthly Fixed Expenses</h3>
-            <div className="grid-3">
-              <div className="row">
-                <label>Rent/Housing</label>
-                <input 
-                  type="number" 
-                  name="rent"
-                  value={formData.rent}
-                  onChange={handleInputChange}
+            <h3>Expense Categories</h3>
+            {categories.map((cat, idx) => (
+              <div className="row" key={idx} style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
+                <input
+                  type="text"
+                  value={cat.name}
+                  onChange={e => handleCategoryChange(idx, 'name', e.target.value)}
+                  placeholder="Category"
+                  style={{ flex: 2 }}
                   required
                 />
-              </div>
-              <div className="row">
-                <label>Loan Repayment</label>
-                <input 
-                  type="number" 
-                  name="loanRepayment"
-                  value={formData.loanRepayment}
-                  onChange={handleInputChange}
+                <input
+                  type="number"
+                  value={cat.amount}
+                  onChange={e => handleCategoryChange(idx, 'amount', e.target.value)}
+                  placeholder="Amount"
+                  style={{ flex: 1 }}
                   required
                 />
+                {categories.length > 1 && (
+                  <button type="button" onClick={() => removeCategory(idx)} style={{ background: '#e74c3c', color: '#fff', border: 'none', borderRadius: 4, padding: '4px 8px', cursor: 'pointer' }}>Remove</button>
+                )}
               </div>
-              <div className="row">
-                <label>Insurance</label>
-                <input 
-                  type="number" 
-                  name="insurance"
-                  value={formData.insurance}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-            </div>
+            ))}
+            <button type="button" onClick={addCategory} style={{ marginTop: 8, background: '#3e92cc', color: '#fff', border: 'none', borderRadius: 4, padding: '6px 12px', cursor: 'pointer' }}>Add Category</button>
           </div>
-
-          <button 
-            type="submit" 
-            className="optimize-button"
-            disabled={loading}
-          >
-            {loading ? 'Optimizing...' : 'Optimize My Budget'}
+          <button type="submit" className="optimize-button" style={{ marginTop: 16 }}>
+            Optimize My Budget
           </button>
         </form>
-
-        {error && (
-          <div className="error-message" style={{
-            color: '#dc3545',
-            marginTop: '20px',
-            padding: '15px',
-            border: '1px solid #dc3545',
-            borderRadius: '8px',
-            backgroundColor: '#fff5f5'
-          }}>
-            <strong>Error:</strong> {error}
-          </div>
-        )}
-
-        {optimizationResult && (
-          <div className="optimization-result" style={{
-            marginTop: '30px',
-            padding: '25px',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '12px',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-          }}>
-            <h3 style={{
-              color: '#2c3e50',
-              marginBottom: '20px',
-              borderBottom: '2px solid #3498db',
-              paddingBottom: '10px'
-            }}>Optimization Results</h3>
-
-            <div style={{ display: 'grid', gap: '20px' }}>
-              <div className="result-section">
-                <h4 style={{ color: '#2c3e50', marginBottom: '15px' }}>Recommended Allocations</h4>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                  gap: '15px'
-                }}>
-                  <div style={{
-                    padding: '15px',
-                    backgroundColor: '#fff',
-                    borderRadius: '8px',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                  }}>
-                    <h5 style={{ color: '#3498db', marginBottom: '8px' }}>Housing</h5>
-                    <p style={{ fontSize: '1.2em', fontWeight: 'bold', color: '#2c3e50' }}>
-                      {formatCurrency(optimizationResult.recommendedAllocations.housing)}
-                    </p>
-                  </div>
-                  <div style={{
-                    padding: '15px',
-                    backgroundColor: '#fff',
-                    borderRadius: '8px',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                  }}>
-                    <h5 style={{ color: '#2ecc71', marginBottom: '8px' }}>Savings</h5>
-                    <p style={{ fontSize: '1.2em', fontWeight: 'bold', color: '#2c3e50' }}>
-                      {formatCurrency(optimizationResult.recommendedAllocations.savings)}
-                    </p>
-                  </div>
-                  <div style={{
-                    padding: '15px',
-                    backgroundColor: '#fff',
-                    borderRadius: '8px',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                  }}>
-                    <h5 style={{ color: '#e74c3c', marginBottom: '8px' }}>Investments</h5>
-                    <p style={{ fontSize: '1.2em', fontWeight: 'bold', color: '#2c3e50' }}>
-                      {formatCurrency(optimizationResult.recommendedAllocations.investments)}
-                    </p>
-                  </div>
-                  <div style={{
-                    padding: '15px',
-                    backgroundColor: '#fff',
-                    borderRadius: '8px',
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                  }}>
-                    <h5 style={{ color: '#f39c12', marginBottom: '8px' }}>Discretionary</h5>
-                    <p style={{ fontSize: '1.2em', fontWeight: 'bold', color: '#2c3e50' }}>
-                      {formatCurrency(optimizationResult.recommendedAllocations.discretionary)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="result-section">
-                <h4 style={{ color: '#2c3e50', marginBottom: '15px' }}>Total Fixed Expenses</h4>
-                <div style={{
-                  padding: '15px',
-                  backgroundColor: '#fff',
-                  borderRadius: '8px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                }}>
-                  <p style={{ fontSize: '1.4em', fontWeight: 'bold', color: '#2c3e50' }}>
-                    {formatCurrency(optimizationResult.totalFixedExpenses)}
-                  </p>
-                </div>
-              </div>
-
-              <div className="result-section">
-                <h4 style={{ color: '#2c3e50', marginBottom: '15px' }}>Recommendations</h4>
-                <div style={{
-                  padding: '15px',
-                  backgroundColor: '#fff',
-                  borderRadius: '8px',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                }}>
-                  <ul style={{
-                    listStyle: 'none',
-                    padding: 0,
-                    margin: 0
-                  }}>
-                    {optimizationResult.recommendations.map((rec, index) => (
-                      <li key={index} style={{
-                        padding: '10px 0',
-                        borderBottom: index < optimizationResult.recommendations.length - 1 ? '1px solid #eee' : 'none',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px'
-                      }}>
-                        <span style={{
-                          color: '#3498db',
-                          fontSize: '1.2em'
-                        }}>•</span>
-                        {rec}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        {showSummary && summary && (
+          <div style={{ marginTop: 32, background: '#f7faff', borderRadius: 12, padding: 24, boxShadow: '0 2px 8px rgba(62,146,204,0.08)' }}>
+            <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12 }}>
+              💰 Total Expenses: ₹{summary.totalExpenses.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 18, fontWeight: 600, marginBottom: 12 }}>
+              💡 Remaining Income: ₹{summary.remaining.toLocaleString()}
+            </div>
+            <div style={{ fontSize: 16, marginBottom: 12 }}>
+              ✅ You saved {summary.percentSaved.toFixed(0)}% of your income this month — {summary.percentSaved >= 50 ? "good job!" : "keep improving!"}
+            </div>
+            <div style={{ fontSize: 16, marginBottom: 12 }}>
+              📊 <b>Suggested Allocation:</b>
+              <ul style={{ margin: '8px 0 0 18px', padding: 0 }}>
+                <li> 📈 Invest: ₹{summary.invest.toLocaleString()} — build long-term wealth with SIPs or mutual funds.</li>
+                <li> 🛡️ Emergency Fund: ₹{summary.emergency.toLocaleString()} — aim for 3–6 months of expenses as a safety net.</li>
+                <li> 🎉 Leisure/Short-term Goals: ₹{summary.leisure.toLocaleString()} — enjoy, but spend wisely!</li>
+              </ul>
+            </div>
+            <div style={{ marginTop: 18, color: '#2563eb', fontWeight: 500 }}>
+              📌 Tip: Track your spending regularly and adjust your budget every month to stay on top of your goals.
             </div>
           </div>
         )}

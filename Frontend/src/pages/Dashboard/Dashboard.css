@@ -10,17 +10,13 @@
   background: #f4f7fb;
 }
 
-.dashboard-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+.profile-card-margin {
+  margin-bottom: 32px;
 }
 
 .dashboard-section {
   margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 .dashboard-section-title {
@@ -43,8 +39,5 @@
   }
   .dashboard-main {
     padding: 20px 6px;
-  }
-  .dashboard-container {
-    padding: 0;
   }
 } 

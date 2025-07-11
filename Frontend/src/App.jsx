@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Header from './components/Header';
 import Home from './pages/Home/Home';
@@ -13,28 +13,34 @@ import InsuranceAdvisor from './pages/InsuranceAdvisor/InsuranceAdvisor';
 import ScrollToTop from './components/ScrollToTop';
 import Dashboard from './pages/Dashboard/Dashboard';
 
+function AppContent() {
+  const location = useLocation();
+  return (
+    <div className="app">
+      <Header />
+      <main className="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/stock" element={<Stock />} />
+          <Route path="/insurance" element={<InsuranceAdvisor />} />
+          <Route path="/chatbot" element={<Chatbot />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+        {location.pathname !== '/dashboard' && <Footer />}
+      </main>
+    </div>
+  );
+}
 
 function App() {
   return (
     <AuthProvider>
       <Router>
-      <ScrollToTop />
-        <div className="app">
-          <Header /> 
-          <main className="main-content">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/budget" element={<Budget />} />
-              <Route path="/stock" element={<Stock />} />
-              <Route path="/insurance" element={<InsuranceAdvisor />} />
-              <Route path="/chatbot" element={<Chatbot />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-            </Routes>
-            <Footer />
-          </main>
-        </div>
+        <ScrollToTop />
+        <AppContent />
       </Router>
     </AuthProvider>
   );

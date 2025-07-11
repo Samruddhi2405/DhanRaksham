@@ -11,7 +11,7 @@ const Dashboard = () => (
   <div className="dashboard-flex">
     <Sidebar />
     <div className="dashboard-main">
-      <ProfileCard />
+      <div className="profile-card-margin"><ProfileCard /></div>
       <div className="dashboard-section">
         <h2 className="dashboard-section-title">Overview</h2>
         <div className="dashboard-grid">

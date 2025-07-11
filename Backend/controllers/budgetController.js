@@ -1,3 +1,5 @@
+const Budget = require('../models/Budget');
+
 const optimizeBudget = async (req, res) => {
   try {
     console.log('Received request body:', req.body);
@@ -46,6 +48,29 @@ const optimizeBudget = async (req, res) => {
   } catch (error) {
     console.error('Budget optimization error:', error);
     res.status(500).json({ message: 'Error optimizing budget: ' + error.message });
+  }
+};
+
+
+const saveBudget = async (req, res) => {
+  try {
+    const budget = new Budget(req.body);
+    await budget.save();
+    res.status(201).json(budget);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to save budget' });
+  }
+};
+
+const getLatestBudget = async (req, res) => {
+  try {
+    const latestBudget = await Budget.findOne().sort({ _id: -1 });
+    if (!latestBudget) {
+      return res.status(404).json({ message: 'No budget found' });
+    }
+    res.json(latestBudget);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch latest budget' });
   }
 };
 
@@ -149,5 +174,7 @@ function generateRecommendations(allocations, totalFixedExpenses, occupation, ci
 }
 
 module.exports = {
-  optimizeBudget
+  optimizeBudget,
+  saveBudget,
+  getLatestBudget
 }; 
