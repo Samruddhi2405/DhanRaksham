@@ -1,5 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkBreaks from 'remark-breaks';
 import './Chatbot.css';
 
 const API_URL = 'http://localhost:5000/api/chatbot/advice';
@@ -22,9 +25,10 @@ const Chatbot = () => {
         e.preventDefault();
         if (!input.trim()) return;
 
-        const userMessage = input.trim();
+        const formattingInstruction = `\n\nPlease answer in Markdown format with headings, bullet points, and emojis as described in your instructions. Use blank lines between sections and after headings. After every bullet point or numbered item, add a blank line. Never put two points on the same line. Use extra blank lines to create clear separation between sections and ideas.`;
+        const userMessage = input.trim() + formattingInstruction;
         setInput('');
-        setMessages(prev => [...prev, { role: 'user', content: userMessage }]);
+        setMessages(prev => [...prev, { role: 'user', content: input.trim() }]);
         setIsLoading(true);
 
         console.log('Sending request to:', API_URL);
@@ -82,7 +86,17 @@ const Chatbot = () => {
                         key={index}
                         className={`message ${message.role} ${message.isError ? 'error' : ''}`}
                     >
-                        <div className="message-content">{message.content}</div>
+                        <div className="message-content">
+                            {message.role === 'assistant' ? (
+                                <ReactMarkdown
+                                    remarkPlugins={[remarkGfm, remarkBreaks]}
+                                >
+                                    {message.content}
+                                </ReactMarkdown>
+                            ) : (
+                                message.content
+                            )}
+                        </div>
                         {message.timestamp && (
                             <div className="message-timestamp">
                                 {new Date(message.timestamp).toLocaleTimeString()}

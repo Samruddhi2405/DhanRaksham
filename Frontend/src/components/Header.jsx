@@ -19,7 +19,7 @@ export const Header = () => {
 
   return (
     <nav className="nav">
-      <div className="container nav-container">
+      <div className="nav-container">
         {/* LOGO + NAME LEFT */}
         <div className="logo-section" onClick={() => navigate('/')}>
           <img src={logo} alt="Logo" className="logo-img" />
