@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Sidebar = () => {
   const location = useLocation();
+  const { user, loading } = useAuth();
 
   const navItems = [
     { label: '🏠 Dashboard', path: '/dashboard' },
@@ -12,14 +14,22 @@ const Sidebar = () => {
     { label: '💬 Chatbot', path: '/chatbot' },
   ];
 
+  const avatarUrl = user ? `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=3e92cc&color=fff&size=128` : '';
+
   return (
     <aside style={styles.sidebar}>
       <div style={styles.profile}>
         <div style={styles.avatar}>
-          <span style={styles.avatarText}>JD</span>
+          {user && <img src={avatarUrl} alt="avatar" style={{ width: 64, height: 64, borderRadius: '50%' }} />}
         </div>
-        <div style={styles.name}>JOHN DON</div>
-        <div style={styles.email}>johndon@company.com</div>
+        {loading ? (
+          <div style={styles.name}>Loading...</div>
+        ) : user ? (
+          <>
+            <div style={styles.name}>{user.name}</div>
+            <div style={styles.email}>{user.email}</div>
+          </>
+        ) : null}
       </div>
 
       <nav style={styles.nav}>
@@ -73,11 +83,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,
-  },
-  avatarText: {
-    color: '#183153',
-    fontSize: 36,
-    fontWeight: 700,
+    overflow: 'hidden',
   },
   name: {
     fontWeight: 600,

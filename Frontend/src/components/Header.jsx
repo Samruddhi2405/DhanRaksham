@@ -47,7 +47,7 @@ export const Header = () => {
                   onClick={() => setShowDropdown(!showDropdown)}
                   title={user.email}
                 >
-                  {user.email[0].toUpperCase()}
+                  {user?.email ? user.email[0].toUpperCase() : ''}
                 </div>
                 {showDropdown && (
                   <div className="dropdown-menu">

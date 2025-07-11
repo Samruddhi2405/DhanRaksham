@@ -1,12 +1,13 @@
 import React from 'react';
+import { useAuth } from '../context/AuthContext';
 
 const ProfileCard = () => {
-  // Sample user data
-  const user = {
-    name: 'John Doe',
-    email: 'john.doe@email.com',
-    avatar: 'https://ui-avatars.com/api/?name=John+Doe&background=3e92cc&color=fff&size=128',
-  };
+  const { user, loading } = useAuth();
+
+  if (loading || !user) return null;
+
+  const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.email)}&background=3e92cc&color=fff&size=128`;
+
   return (
     <div style={{
       background: '#f7faff',
@@ -17,8 +18,8 @@ const ProfileCard = () => {
       flexDirection: 'column',
       alignItems: 'center',
     }}>
-      <img src={user.avatar} alt="avatar" style={{ width: 64, height: 64, borderRadius: '50%', marginBottom: 12 }} />
-      <h3 style={{ margin: 0 }}>{user.name}</h3>
+      <img src={avatarUrl} alt="avatar" style={{ width: 64, height: 64, borderRadius: '50%', marginBottom: 12 }} />
+      <h3 style={{ margin: 0 }}>{user.name || 'User'}</h3>
       <p style={{ margin: 0, color: '#3e92cc', fontSize: 14 }}>{user.email}</p>
     </div>
   );

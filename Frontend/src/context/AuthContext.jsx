@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import axios from 'axios';
 
 const AuthContext = createContext(null);
 
@@ -7,22 +8,33 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on initial load
-    const storedUser = localStorage.getItem('user');
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
+    // Check if token exists and fetch user info
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get('/api/auth/me', {
+        headers: { Authorization: token }
+      })
+      .then(res => setUser(res.data))
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
 
-  const login = (userData, token) => {
-    localStorage.setItem('user', JSON.stringify(userData));
+  const login = async (userData, token) => {
     localStorage.setItem('token', token);
-    setUser(userData);
+    try {
+      const res = await axios.get('/api/auth/me', {
+        headers: { Authorization: token }
+      });
+      setUser(res.data);
+    } catch {
+      setUser(null);
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
     localStorage.removeItem('token');
     setUser(null);
   };

@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import joblib
 
-# Generate dummy stock data
+
 np.random.seed(42)
 n_samples = 1000
 

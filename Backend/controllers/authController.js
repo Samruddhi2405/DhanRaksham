@@ -5,11 +5,11 @@ const User = require('../models/User');
 const signup = async (req, res) => {
   try {
     console.log('Received signup request:', req.body);
-    const { email, password } = req.body;
+    const { name, email, password } = req.body;
 
-    if (!email || !password) {
-      console.log('Missing email or password');
-      return res.status(400).json({ message: 'Email and password are required' });
+    if (!name || !email || !password) {
+      console.log('Missing name, email or password');
+      return res.status(400).json({ message: 'Name, email and password are required' });
     }
 
     // Check if user already exists
@@ -27,6 +27,7 @@ const signup = async (req, res) => {
     // Create new user
     console.log('Creating new user...');
     const user = new User({
+      name,
       email,
       password: hashedPassword
     });
@@ -48,6 +49,7 @@ const signup = async (req, res) => {
       token,
       user: {
         id: user._id,
+        name: user.name,
         email: user.email
       }
     });
@@ -104,6 +106,7 @@ const signin = async (req, res) => {
       token,
       user: {
         id: user._id,
+        name: user.name,
         email: user.email
       }
     });

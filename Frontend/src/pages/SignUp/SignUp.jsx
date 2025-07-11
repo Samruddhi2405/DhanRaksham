@@ -7,7 +7,7 @@ import './SignUp.css';
 const SignUp = ({ inModal = false }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +27,7 @@ const SignUp = ({ inModal = false }) => {
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/signup', {
-        username,   // ✅ Added!
+        name,   // <-- send name
         email,
         password
       });
@@ -56,10 +56,10 @@ const SignUp = ({ inModal = false }) => {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Name"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               disabled={loading}
             />
           </div>
@@ -116,10 +116,10 @@ const SignUp = ({ inModal = false }) => {
           <div className="input-group">
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Name"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               disabled={loading}
             />
           </div>
