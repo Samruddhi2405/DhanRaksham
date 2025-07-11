@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
+//import Layout from './Layout';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import './Chatbot.css';

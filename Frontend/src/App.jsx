@@ -1,23 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+
 import Header from './components/Header';
+import Footer from './components/Footer';
+import ScrollToTop from './components/ScrollToTop';
+
 import Home from './pages/Home/Home';
 import SignIn from './pages/SignIn/SignIn';
 import SignUp from './pages/SignUp/SignUp';
 import Budget from './pages/Budget/Budget';
 import Stock from './pages/Stock/Stock';
-import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import InsuranceAdvisor from './pages/InsuranceAdvisor/InsuranceAdvisor';
-import ScrollToTop from './components/ScrollToTop';
+
 import Dashboard from './pages/Dashboard/Dashboard';
 
 function AppContent() {
   const location = useLocation();
+  const isDashboardRoute = location.pathname.startsWith('/dashboard');
+
   return (
     <div className="app">
-      <Header />
+      {/* ✅ Show global Header ONLY when NOT in dashboard */}
+      {!isDashboardRoute && <Header />}
+
       <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
@@ -27,9 +34,13 @@ function AppContent() {
           <Route path="/stock" element={<Stock />} />
           <Route path="/insurance" element={<InsuranceAdvisor />} />
           <Route path="/chatbot" element={<Chatbot />} />
+
+          {/* ✅ Dashboard uses Layout inside, so NO Header here */}
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
-        {location.pathname !== '/dashboard' && <Footer />}
+
+        {/* ✅ Show global Footer ONLY when NOT in dashboard */}
+        {!isDashboardRoute && <Footer />}
       </main>
     </div>
   );

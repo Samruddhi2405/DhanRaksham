@@ -5,9 +5,10 @@
 }
 
 .dashboard-main {
-  flex: 1;
-  padding: 40px 32px;
-  background: #f4f7fb;
+    margin-left: 220px; /* Same as sidebar width */
+    padding: 32px 24px;
+    min-height: calc(100vh - 72px);
+    background: #f6f8fa;
 }
 
 .profile-card-margin {
@@ -39,5 +40,6 @@
   }
   .dashboard-main {
     padding: 20px 6px;
+    margin-left: 0;
   }
 } 

@@ -1,33 +1,27 @@
 import React from 'react';
-import './Dashboard.css';
-import Sidebar from './Sidebar';
-import ProfileCard from './ProfileCard';
-import BudgetWidget from './BudgetWidget';
-import StockWidget from './StockWidget';
-import InsuranceWidget from './InsuranceWidget';
-import FinanceChart from './FinanceChart';
+import Layout from '../../components/Layout';
+import ProfileCard from '../../components/ProfileCard';
+import BudgetWidget from '../../components/BudgetWidget';
+import StockWidget from '../../components/StockWidget';
+import InsuranceWidget from '../../components/InsuranceWidget';
+import FinanceChart from '../../components/FinanceChart';
 
 const Dashboard = () => (
-  <div className="dashboard-flex">
-    <Sidebar />
-    <div className="dashboard-main">
-      <div className="profile-card-margin"><ProfileCard /></div>
-      <div className="dashboard-section">
-        <h2 className="dashboard-section-title">Overview</h2>
-        <div className="dashboard-grid">
-          <BudgetWidget />
-          <StockWidget />
-          <InsuranceWidget />
-        </div>
-      </div>
-      <div className="dashboard-section">
-        <h2 className="dashboard-section-title">Insights</h2>
-        <div className="dashboard-grid">
-          <FinanceChart />
-        </div>
+  <Layout>
+    <ProfileCard />
+    <div className="dashboard-section">
+      <h2>Overview</h2>
+      <div className="dashboard-grid">
+        <BudgetWidget />
+        <StockWidget />
+        <InsuranceWidget />
       </div>
     </div>
-  </div>
+    <div className="dashboard-section">
+      <h2>Insights</h2>
+      <FinanceChart />
+    </div>
+  </Layout>
 );
 
-export default Dashboard; 
+export default Dashboard;
