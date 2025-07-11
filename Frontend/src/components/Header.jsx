@@ -3,14 +3,19 @@ import './Header.css';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import Modal from './Modal';
+import SignIn from '../pages/SignIn/SignIn';
+import SignUp from '../pages/SignUp/SignUp';
 
 export const Header = () => {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [modalType, setModalType] = useState(null); // 'signin' | 'signup' | null
 
-  const handleSignInClick = () => navigate('/signin');
-  const handleSignUpClick = () => navigate('/signup');
+  const handleSignInClick = () => setModalType('signin');
+  const handleSignUpClick = () => setModalType('signup');
+  const handleCloseModal = () => setModalType(null);
 
   const handleLogout = () => {
     logout();
@@ -66,6 +71,13 @@ export const Header = () => {
           )}
         </ul>
       </div>
+      {/* Modal for Sign In / Sign Up */}
+      <Modal isOpen={modalType === 'signin'} onClose={handleCloseModal}>
+        <SignIn inModal={true} />
+      </Modal>
+      <Modal isOpen={modalType === 'signup'} onClose={handleCloseModal}>
+        <SignUp inModal={true} />
+      </Modal>
     </nav>
   );
 };

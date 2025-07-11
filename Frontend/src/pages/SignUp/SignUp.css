@@ -17,11 +17,11 @@
 
 .form-container {
   background-color: #fff;
-  padding: 3rem; /* Increased padding */
-  border-radius: 12px; /* Slightly more rounded corners */
+  padding: 32px 20px;
+  border-radius: 12px; 
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px; /* Larger form */
+  max-width: 400px;
 }
 
 .form-container h2 {
@@ -32,7 +32,7 @@
 }
 
 .input-group {
-  margin-bottom: 2rem; /* Increased spacing between inputs */
+  margin-bottom: 10px;
 }
 
 .input-group input {
@@ -59,6 +59,7 @@
   font-size: 1.3rem; /* Larger button text */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 12px;
 }
 
 .button:hover {
