@@ -14,18 +14,9 @@ const InsurancePrediction = require('./models/InsurancePrediction');
 
 console.log('Starting server initialization...');
 
-// Load environment variables from the local directory
-const envPath = path.resolve(__dirname, './config.env');
-console.log('Loading environment variables from:', envPath);
 
-// Load environment variables
-const result = dotenv.config({ path: envPath });
-if (result.error) {
-    console.error('Error loading .env file:', result.error);
-    process.exit(1);
-}
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-// Debug environment variables
 console.log('Environment Variables:', {
     NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT,
