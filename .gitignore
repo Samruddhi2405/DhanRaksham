@@ -1,6 +1,45 @@
-<<<<<<< HEAD
+# Dependencies
+node_modules/
+*/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production builds
+dist/
+dist-ssr/
+build/
+*.local
+
+# Environment variables and secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+config.env
+*.env
+Backend/config.env
+Frontend/.env
+
+# API Keys and sensitive configuration
+.env.example
+config.example
+secrets.json
+credentials.json
+service-account-key.json
+google-credentials.json
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+mongodb-data/
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -8,20 +47,250 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
 dist
-dist-ssr
-*.local
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
 
 # Editor directories and files
-.vscode/*
+.vscode/
 !.vscode/extensions.json
-.idea
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-"Backend/models/insurance_budget_model.joblib" 
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Machine Learning Models and Data
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.model
+*.weights
+*.bin
+*.pt
+*.pth
+*.onnx
+*.tflite
+*.pb
+
+# Specific model files (keep these secure)
+Backend/models/*.pkl
+Backend/models/*.joblib
+Backend/models/scaler.pkl
+Backend/models/stock_model.pkl
+Backend/models/insurance_risk_model.joblib
+Backend/models/feature_columns.joblib
+Backend/models/label_encoders.joblib
+Backend/models/scalers.joblib
+models/*.joblib
+models/*.pkl
+
+# Data files
+*.csv
+*.json
+*.xlsx
+*.xls
+data/
+Backend/data/
+Backend/data.csv
+Backend/IncomeSurveyDataset.csv
+Backend/input.csv
+Backend/insurance_data.csv
+Backend/output.csv
+insurance.csv
+
+# Training scripts and outputs
+train_*.py
+demo.py
+new.py
+fly.py
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Local development
+.local
+local/
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
+
+# Docker
+.dockerignore
+Dockerfile
+docker-compose.yml
+docker-compose.yaml
+
+# Kubernetes
+*.yaml
+*.yml
+!docker-compose.yml
+!docker-compose.yaml
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# IDE specific files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/shelf/
+
+# Package manager lock files (optional - uncomment if you want to ignore them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Local configuration files
+config.local.js
+config.local.json
+settings.local.js
+settings.local.json 

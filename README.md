@@ -1,129 +1,244 @@
-# Ty-DSBD: Financial Advisory & Insurance Prediction System 🚀
+# DhanRaksham - AI-Powered Financial Management Platform
 
-![GitHub](https://img.shields.io/github/license/Project-Ty-collab/Ty-DSBD)
-![Node.js Version](https://img.shields.io/badge/node-%3E%3D16.0.0-brightgreen)
-![Python Version](https://img.shields.io/badge/python-%3E%3D3.8-blue)
+<div align="center">
+  <img src="Frontend/src/assets/logo.png" alt="DhanRaksham Logo" width="200"/>
+  
+  [![React](https://img.shields.io/badge/React-19.1.0-blue.svg)](https://reactjs.org/)
+  [![Node.js](https://img.shields.io/badge/Node.js-Express-green.svg)](https://nodejs.org/)
+  [![Python](https://img.shields.io/badge/Python-FastAPI-red.svg)](https://python.org/)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-Database-green.svg)](https://mongodb.com/)
+</div>
 
-A sophisticated financial advisory system powered by Google's Gemini AI, combined with machine learning-based insurance prediction capabilities. This project provides both structured and narrative financial advice along with intelligent insurance premium predictions.
+## 🚀 Overview
+
+DhanRaksham is a comprehensive financial management platform that combines AI-powered insights with user-friendly tools to help users manage their finances effectively. The platform offers stock prediction, insurance advice, budget optimization, and an intelligent chatbot for financial guidance.
 
 ## ✨ Features
 
-### Financial Advisory System 💹
-- Expert-level financial guidance with 70+ years of simulated experience
-- Structured JSON responses for technical queries
-- Narrative-style responses for general financial advice
-- Comprehensive market analysis and historical context
-- Risk assessment and management recommendations
+### 🛡️ Insurance Predictor
+- AI-powered insurance recommendations based on personal data
+- Risk assessment and coverage amount suggestions
+- Personalized insurance plans tailored to individual needs
 
-### Insurance Prediction System 🎯
-- Machine learning-based insurance premium prediction
-- Real-time API integration
-- Accurate cost estimations based on multiple factors
+### 📈 Stock Predictor
+- Machine learning-based stock trend predictions
+- Investment amount optimization
+- Risk level analysis (Low, Medium, High)
+- Expected return calculations
+
+### 💬 AI Chatbot Advisor
+- 24/7 intelligent financial guidance
+- Instant answers to finance-related questions
+- Powered by Google's Generative AI
+
+### 💰 Budget Optimizer
+- Track and analyze spending patterns
+- Personalized budget recommendations
+- Financial goal setting and monitoring
+
+### 🔐 User Authentication
+- Secure user registration and login
+- JWT-based authentication
+- Protected routes and user profiles
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Node.js, Express.js
-- **AI/ML**: Google Gemini API, Python scikit-learn
-- **APIs**: RESTful architecture
-- **Development**: JavaScript, Python
-- **Documentation**: OpenAPI/Swagger
+### Frontend
+- **React 19** - Modern UI framework
+- **Vite** - Fast build tool
+- **React Router** - Client-side routing
+- **Recharts** - Data visualization
+- **CSS3** - Styling and animations
+
+### Backend
+- **Node.js** - JavaScript runtime
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB ODM
+- **JWT** - Authentication
+
+### AI/ML Services
+- **Python FastAPI** - ML model serving
+- **Scikit-learn** - Machine learning models
+- **Joblib** - Model serialization
+- **Google Generative AI** - Chatbot intelligence
+
+### DevOps & Tools
+- **CORS** - Cross-origin resource sharing
+- **Dotenv** - Environment management
+- **Nodemon** - Development server
+- **ESLint** - Code linting
+
+## 📁 Project Structure
+
+```
+DhanRaksham/
+├── Frontend/                 # React frontend application
+│   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   ├── pages/           # Page components
+│   │   ├── context/         # React context providers
+│   │   └── assets/          # Static assets
+│   ├── package.json
+│   └── vite.config.js
+├── Backend/                  # Node.js backend server
+│   ├── controllers/         # Route controllers
+│   ├── models/             # Database models
+│   ├── routes/             # API routes
+│   ├── middleware/         # Custom middleware
+│   ├── services/           # Business logic
+│   ├── models/             # ML model files
+│   ├── main.py             # Python FastAPI server
+│   └── server.js           # Express server
+├── models/                  # Shared ML models
+├── config/                  # Configuration files
+└── README.md
+```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (>= 16.0.0)
-- Python (>= 3.8)
-- npm or yarn
-- Git
+- Node.js (v16 or higher)
+- Python (v3.8 or higher)
+- MongoDB (local or cloud instance)
+- npm or yarn package manager
 
-### Environment Setup
+### Installation
 
-1. Clone the repository:
+1. **Clone the repository**
    ```bash
-   git clone https://github.com/Project-Ty-collab/Ty-DSBD.git
-   cd Ty-DSBD
+   git clone <repository-url>
+   cd DhanRaksham
    ```
 
-2. Install Node.js dependencies:
+2. **Install Frontend Dependencies**
    ```bash
+   cd Frontend
    npm install
    ```
 
-3. Install Python dependencies:
+3. **Install Backend Dependencies**
+   ```bash
+   cd ../Backend
+   npm install
+   ```
+
+4. **Install Python Dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. Configure environment variables:
-   - Copy `config.env.example` to `config.env`
-   - Add your Gemini API key and other required credentials
+5. **Environment Setup**
+   
+   Create `.env` files in the Backend directory:
+   ```env
+   # Backend/config.env
+   PORT=5000
+   MONGODB_URI=mongodb://localhost:27017/dhanraksham
+   GEMINI_API_KEY=your_gemini_api_key_here
+   JWT_SECRET=your_jwt_secret_here
+   ```
 
 ### Running the Application
 
-1. Start the Node.js backend server:
+1. **Start MongoDB** (if running locally)
    ```bash
-   npm start
+   mongod
    ```
 
-2. In a new terminal, start the Python prediction service:
+2. **Start Python FastAPI Server** (for ML models)
    ```bash
-   python fly.py
+   cd Backend
+   python main.py
    ```
 
-The application should now be running at:
-- Node.js Backend: `http://localhost:3000`
-- Python Prediction Service: `http://localhost:5000`
+3. **Start Node.js Backend Server**
+   ```bash
+   cd Backend
+   npm run dev
+   ```
 
-## 🔄 API Endpoints
+4. **Start React Frontend**
+   ```bash
+   cd Frontend
+   npm run dev
+   ```
 
-### Finance APIs
-- `POST /api/finance` - Get narrative financial advice
-- `POST /api/finance/structured` - Get structured JSON financial advice
-- `POST /api/finance/unified` - Get auto-formatted financial advice
+5. **Access the Application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:5000
+   - ML API: http://localhost:8000
 
-### Insurance APIs
-- `POST /api/predict_insurance` - Get insurance premium predictions
+## 📊 API Endpoints
 
-## 📝 API Usage Examples
+### Authentication
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/user/profile` - Get user profile
 
-### Financial Advice Request
-```json
-POST /api/finance
-{
-    "query": "What are the best retirement planning strategies for someone in their 30s?"
-}
+### Budget Management
+- `GET /api/budget` - Get user budgets
+- `POST /api/budget` - Create new budget
+- `PUT /api/budget/:id` - Update budget
+- `DELETE /api/budget/:id` - Delete budget
+
+### AI Services
+- `POST /api/chatbot/advice` - Get chatbot advice
+- `POST /api/predict-stock` - Stock prediction
+- `POST /api/predict-insurance` - Insurance prediction
+
+## 🤖 Machine Learning Models
+
+The application uses several ML models for predictions:
+
+- **Stock Prediction Model**: Random Forest Regressor for stock returns
+- **Insurance Amount Model**: Predicts optimal insurance coverage
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `PORT` | Backend server port | Yes |
+| `MONGODB_URI` | MongoDB connection string | Yes |
+| `GEMINI_API_KEY` | Google Generative AI API key | Yes |
+| `JWT_SECRET` | JWT signing secret | Yes |
+
+### API Keys Required
+
+- **Google Generative AI**: For chatbot functionality
+- **MongoDB Atlas** (optional): For cloud database
+
+## 🚀 Deployment
+
+### Frontend Deployment
+```bash
+cd Frontend
+npm run build
 ```
 
-### Insurance Prediction Request
-```json
-POST /api/predict_insurance
-{
-    "age": 30,
-    "bmi": 22.5,
-    "smoker": "no",
-    "region": "southwest"
-}
+### Backend Deployment
+```bash
+cd Backend
+npm start
 ```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 License
+## 📝 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the ISC License.
 
-## 🙏 Acknowledgments
+## 📞 Contact
 
-- Google Gemini AI for powering the financial advisory system
-- scikit-learn for machine learning capabilities
-- All contributors who helped shape this project
+For any inquiries, collaborations, or support, please feel free to contact us.
 
 ---
-
-Made with ❤️ by Project-Ty-collab team
