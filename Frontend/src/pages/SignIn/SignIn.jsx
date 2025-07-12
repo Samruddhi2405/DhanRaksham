@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './SignIn.css';
 
-const SignIn = ({ inModal = false }) => {
+const SignIn = ({ inModal = false, onSuccess }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [email, setEmail] = useState('');
@@ -26,8 +26,9 @@ const SignIn = ({ inModal = false }) => {
       // Use the login function from AuthContext
       login(response.data.user, response.data.token);
 
-      // Navigate to home page
-      navigate('/');
+      if (inModal && onSuccess) onSuccess();
+      // Navigate to home page (only if not in modal)
+      if (!inModal) navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred during sign in');
     } finally {

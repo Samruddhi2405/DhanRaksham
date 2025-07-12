@@ -31,8 +31,16 @@ app.add_middleware(
 # Load model and scaler
 try:
     logger.info("Attempting to load model and scaler...")
-    model = joblib.load('Backend/models/stock_model.pkl')
-    scaler = joblib.load('Backend/models/scaler.pkl')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(BASE_DIR, 'models', 'stock_model.pkl')
+    scaler_path = os.path.join(BASE_DIR, 'models', 'scaler.pkl')
+    print("Current working directory:", os.getcwd())
+    print("Model path:", model_path)
+    print("Scaler path:", scaler_path)
+    print("Model file exists:", os.path.exists(model_path))
+    print("Scaler file exists:", os.path.exists(scaler_path))
+    model = joblib.load(model_path)
+    scaler = joblib.load(scaler_path)
     logger.info("Model and scaler loaded successfully!")
 except Exception as e:
     logger.error(f"Error loading model: {e}")

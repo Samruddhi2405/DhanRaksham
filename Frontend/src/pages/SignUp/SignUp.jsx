@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import './SignUp.css';
 
-const SignUp = ({ inModal = false }) => {
+const SignUp = ({ inModal = false, onSuccess }) => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [name, setName] = useState('');
@@ -35,7 +35,9 @@ const SignUp = ({ inModal = false }) => {
       // Save token + user
       login(response.data.user, response.data.token);
 
-      navigate('/');
+      if (inModal && onSuccess) onSuccess();
+      // Navigate to home page (only if not in modal)
+      if (!inModal) navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred during sign up');
     } finally {
