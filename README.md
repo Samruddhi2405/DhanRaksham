@@ -95,78 +95,85 @@ DhanRaksham/
 └── README.md
 ```
 
-## 🚀 Getting Started
+## 🤖 Machine Learning Models & Model Training
 
-### Prerequisites
+The application uses several ML models for predictions:
 
-- Node.js (v16 or higher)
-- Python (v3.8 or higher)
-- MongoDB (local or cloud instance)
-- npm or yarn package manager
+- **Stock Prediction Model**: DecisionTreeRegressor for stock returns
+- **Insurance Amount Model**: Predicts optimal insurance coverage
 
-### Installation
+## Model Training & Setup
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd DhanRaksham
-   ```
+**Before running the backend, you must train and save the ML models:**
 
-2. **Install Frontend Dependencies**
-   ```bash
-   cd Frontend
-   npm install
-   ```
+1. **Train the Stock Model**
+   - From your project root, run:
+     ```bash
+     python train_stock_model.py
+     ```
+   - This will create `Backend/models/stock_model.pkl` and `Backend/models/scaler.pkl`.
 
-3. **Install Backend Dependencies**
-   ```bash
-   cd ../Backend
-   npm install
-   ```
+2. **Verify Model Files**
+   - Ensure both files exist in `Backend/models/` before starting the FastAPI backend.
 
-4. **Install Python Dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. **Absolute Path Loading**
+   - The FastAPI backend loads models using absolute paths, so it works regardless of your working directory.
 
-5. **Environment Setup**
-   
-   Copy the example environment file and configure it:
-   ```bash
-   cp env.example Backend/config.env
-   ```
-   
-   Edit `Backend/config.env` with your actual values. See [SETUP.md](SETUP.md) for detailed configuration instructions.
+4. **Model Compatibility**
+   - Always use the same Python and scikit-learn versions for training and serving models. List dependencies in `requirements.txt`.
 
-### Running the Application
+## 🛠️ Running the Application
 
 1. **Start MongoDB** (if running locally)
    ```bash
    mongod
    ```
 
-2. **Start Python FastAPI Server** (for ML models)
+2. **Train ML Models** (if not already done)
    ```bash
-   cd Backend
-   python main.py
+   python train_stock_model.py
    ```
 
-3. **Start Node.js Backend Server**
+3. **Start Python FastAPI Server** (for ML models)
+   - From the `Backend/` directory:
+     ```bash
+     uvicorn main:app --reload --port 8000
+     ```
+   - Or from the project root:
+     ```bash
+     uvicorn Backend.main:app --reload --port 8000
+     ```
+
+4. **Start Node.js Backend Server**
    ```bash
    cd Backend
    npm run dev
    ```
 
-4. **Start React Frontend**
+5. **Start React Frontend**
    ```bash
    cd Frontend
    npm run dev
    ```
 
-5. **Access the Application**
+6. **Access the Application**
    - Frontend: http://localhost:5173
    - Backend API: http://localhost:5000
    - ML API: http://localhost:8000
+
+## 🐞 Troubleshooting Model Errors
+
+- **FileNotFoundError**: If you see `No such file or directory: 'Backend/models/stock_model.pkl'`, make sure you have run the training script and the files exist.
+- **monotonic_cst Error**: If you see `'DecisionTreeRegressor' object has no attribute 'monotonic_cst'`, delete all old model files, retrain using the provided script, and restart your backend.
+- **ECONNREFUSED**: If you see this error, make sure your FastAPI server is running on port 8000.
+- **Path Issues**: The backend now uses absolute paths for model loading, so you can run the server from any directory.
+
+## 🚀 Deployment Best Practices
+
+- **Include model files**: Ensure `Backend/models/stock_model.pkl` and `scaler.pkl` are present in your deployment package.
+- **Use absolute paths**: The backend is set up for this.
+- **Match Python/scikit-learn versions**: Use the same versions in production as in development.
+- **Test after deployment**: Always test the prediction endpoints after deploying.
 
 ## 📊 API Endpoints
 
@@ -185,43 +192,6 @@ DhanRaksham/
 - `POST /api/chatbot/advice` - Get chatbot advice
 - `POST /api/predict-stock` - Stock prediction
 - `POST /api/predict-insurance` - Insurance prediction
-
-## 🤖 Machine Learning Models
-
-The application uses several ML models for predictions:
-
-- **Stock Prediction Model**: Random Forest Regressor for stock returns
-- **Insurance Amount Model**: Predicts optimal insurance coverage
-
-## 🔧 Configuration
-
-### Environment Variables
-
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `PORT` | Backend server port | Yes |
-| `MONGODB_URI` | MongoDB connection string | Yes |
-| `GEMINI_API_KEY` | Google Generative AI API key | Yes |
-| `JWT_SECRET` | JWT signing secret | Yes |
-
-### API Keys Required
-
-- **Google Generative AI**: For chatbot functionality
-- **MongoDB Atlas** (optional): For cloud database
-
-## 🚀 Deployment
-
-### Frontend Deployment
-```bash
-cd Frontend
-npm run build
-```
-
-### Backend Deployment
-```bash
-cd Backend
-npm start
-```
 
 ## 🤝 Contributing
 

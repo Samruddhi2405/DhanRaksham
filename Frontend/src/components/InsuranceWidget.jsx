@@ -56,8 +56,7 @@ const InsuranceWidget = () => {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'flex-start',
-      minWidth: 260,
-      maxWidth: 600
+      minWidth: 260
     }}>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
         <span style={{ fontSize: 28, marginRight: 12 }}>🛡️</span>

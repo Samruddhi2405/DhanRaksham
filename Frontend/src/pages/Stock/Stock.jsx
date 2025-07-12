@@ -42,11 +42,13 @@ const Stock = () => {
       for (const port of ports) {
         try {
           console.log(`Attempting to connect to port ${port}...`);
+          const token = localStorage.getItem('token');
           const response = await fetch(`http://localhost:${port}/api/predict-stock`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'Accept': 'application/json'
+              'Accept': 'application/json',
+              'Authorization': token
             },
             body: JSON.stringify(requestBody),
           });

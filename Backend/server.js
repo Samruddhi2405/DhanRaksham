@@ -171,6 +171,18 @@ app.get('/api/insurance/latest', verifyToken, async (req, res) => {
     }
 });
 
+// Proxy endpoint for NewsAPI to avoid CORS issues
+app.get('/api/news', async (req, res) => {
+  try {
+    const response = await axios.get(
+      'https://newsapi.org/v2/top-headlines?category=business&country=in&pageSize=5&apiKey=0ee4424439cc4af1a9daa0e584cb8699'
+    );
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch news' });
+  }
+});
+
 
 app.get('/api/user/profile', verifyToken, (req, res) => {
     console.log('req.user:', req.user);
