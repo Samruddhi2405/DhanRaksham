@@ -9,6 +9,8 @@ const chatbotRoutes = require('./routes/chatbotRoutes');
 const axios = require('axios');
 const auth = require('./middleware/auth');
 const verifyToken = require('./middleware/verifyToken');
+const StockPrediction = require('./models/StockPrediction');
+const InsurancePrediction = require('./models/InsurancePrediction');
 
 console.log('Starting server initialization...');
 
@@ -82,7 +84,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/chatbot', chatbotRoutes);
 
 // Stock prediction route
-app.post('/api/predict-stock', async (req, res) => {
+app.post('/api/predict-stock', verifyToken, async (req, res) => {
     try {
         console.log("Received stock prediction request:", req.body);
         const response = await axios.post(
@@ -95,6 +97,16 @@ app.post('/api/predict-stock', async (req, res) => {
             }
         );
         console.log("Stock prediction response:", response.data);
+        // Save prediction to DB
+        const stockPrediction = new StockPrediction({
+            user: req.user.userId,
+            investment_amount: req.body.investment_amount,
+            num_stocks: req.body.num_stocks,
+            risk_level: req.body.risk_level,
+            prediction: response.data.prediction,
+            expected_return: response.data.expected_return
+        });
+        await stockPrediction.save();
         res.status(response.status).json(response.data);
     } catch (error) {
         console.error("Stock prediction error:", error);
@@ -105,8 +117,19 @@ app.post('/api/predict-stock', async (req, res) => {
     }
 });
 
+// Get latest stock prediction for user
+app.get('/api/stock/latest', verifyToken, async (req, res) => {
+    try {
+        const latest = await StockPrediction.findOne({ user: req.user.userId }).sort({ createdAt: -1 });
+        if (!latest) return res.status(404).json({ message: 'No stock prediction found' });
+        res.json(latest);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch latest stock prediction' });
+    }
+});
+
 // Insurance prediction route
-app.post('/api/predict-insurance', async (req, res) => {
+app.post('/api/predict-insurance', verifyToken, async (req, res) => {
     try {
         console.log("Received insurance prediction request:", req.body);
         const response = await axios.post(
@@ -119,6 +142,14 @@ app.post('/api/predict-insurance', async (req, res) => {
             }
         );
         console.log("Insurance prediction response:", response.data);
+        // Save prediction to DB
+        const insurancePrediction = new InsurancePrediction({
+            user: req.user.userId,
+            input: req.body,
+            prediction_summary: response.data.prediction_summary,
+            recommendations: response.data.recommendations
+        });
+        await insurancePrediction.save();
         res.status(response.status).json(response.data);
     } catch (error) {
         console.error("Insurance prediction error:", error);
@@ -126,6 +157,17 @@ app.post('/api/predict-insurance', async (req, res) => {
             error: error.message,
             message: "Failed to call the insurance prediction API",
         });
+    }
+});
+
+// Get latest insurance prediction for user
+app.get('/api/insurance/latest', verifyToken, async (req, res) => {
+    try {
+        const latest = await InsurancePrediction.findOne({ user: req.user.userId }).sort({ createdAt: -1 });
+        if (!latest) return res.status(404).json({ message: 'No insurance prediction found' });
+        res.json(latest);
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to fetch latest insurance prediction' });
     }
 });
 

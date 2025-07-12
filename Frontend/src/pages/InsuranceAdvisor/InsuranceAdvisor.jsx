@@ -160,10 +160,12 @@ const InsuranceAdvisor = () => {
         children: parseInt(formData.children) || 0
       };
 
+      const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:5000/api/predict-insurance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': token
         },
         body: JSON.stringify(requestBody),
       });

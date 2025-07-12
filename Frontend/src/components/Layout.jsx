@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
       <Header />
       <Sidebar />
       <main style={{
-        marginLeft: 220, // Sidebar width
+        marginLeft: 280, // Sidebar width
         marginTop: 60,   // Header height
         padding: 32,
       }}>

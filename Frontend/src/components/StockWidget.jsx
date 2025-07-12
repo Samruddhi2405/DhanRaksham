@@ -9,20 +9,27 @@ const StockWidget = () => {
   ];
   return (
     <div style={{
-      background: '#f0faff',
-      borderRadius: '10px',
-      padding: '24px',
-      boxShadow: '0 2px 8px rgba(62,146,204,0.08)',
+      background: '#fff',
+      borderRadius: '16px',
+      boxShadow: '0 4px 16px rgba(62,146,204,0.10)',
+      padding: '32px',
+      marginBottom: '24px',
       display: 'flex',
       flexDirection: 'column',
+      alignItems: 'flex-start',
+      minWidth: 260,
+      maxWidth: 600
     }}>
-      <h4 style={{ margin: 0, color: '#3e92cc' }}>Stock Portfolio</h4>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+        <span style={{ fontSize: 28, marginRight: 12 }}>📈</span>
+        <h3 style={{ margin: 0, color: '#3e92cc', fontWeight: 700, fontSize: 22 }}>Stock Portfolio</h3>
+      </div>
       <ul style={{ listStyle: 'none', padding: 0, margin: '12px 0 0 0', width: '100%' }}>
         {stocks.map(stock => (
-          <li key={stock.symbol} style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-            <span>{stock.symbol}</span>
-            <span style={{ color: stock.change.startsWith('+') ? '#2ecc40' : '#e74c3c', fontWeight: 500 }}>{stock.change}</span>
-            <span>₹{stock.value}</span>
+          <li key={stock.symbol} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, fontSize: 16 }}>
+            <span style={{ fontWeight: 600 }}>{stock.symbol}</span>
+            <span style={{ color: stock.change.startsWith('+') ? '#27ae60' : '#e74c3c', fontWeight: 500 }}>{stock.change}</span>
+            <span style={{ color: '#2563eb', fontWeight: 600 }}>₹{stock.value}</span>
           </li>
         ))}
       </ul>

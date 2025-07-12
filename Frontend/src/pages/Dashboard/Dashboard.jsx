@@ -3,7 +3,6 @@ import Layout from '../../components/Layout';
 import BudgetWidget from '../../components/BudgetWidget';
 import StockWidget from '../../components/StockWidget';
 import InsuranceWidget from '../../components/InsuranceWidget';
-import FinanceChart from '../../components/FinanceChart';
 
 const Dashboard = () => (
   <Layout>
@@ -14,10 +13,6 @@ const Dashboard = () => (
         <StockWidget />
         <InsuranceWidget />
       </div>
-    </div>
-    <div className="dashboard-section">
-      <h2>Insights</h2>
-      <FinanceChart />
     </div>
   </Layout>
 );

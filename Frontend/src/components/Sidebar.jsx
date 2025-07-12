@@ -58,7 +58,7 @@ const styles = {
     position: 'fixed',
     top: 60,
     left: 0,
-    width: 220,
+    width: 280,
     height: 'calc(100vh - 60px)',
     background: '#183153',
     color: '#fff',
