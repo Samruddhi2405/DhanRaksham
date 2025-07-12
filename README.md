@@ -131,14 +131,12 @@ DhanRaksham/
 
 5. **Environment Setup**
    
-   Create `.env` files in the Backend directory:
-   ```env
-   # Backend/config.env
-   PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/dhanraksham
-   GEMINI_API_KEY=your_gemini_api_key_here
-   JWT_SECRET=your_jwt_secret_here
+   Copy the example environment file and configure it:
+   ```bash
+   cp env.example Backend/config.env
    ```
+   
+   Edit `Backend/config.env` with your actual values. See [SETUP.md](SETUP.md) for detailed configuration instructions.
 
 ### Running the Application
 
