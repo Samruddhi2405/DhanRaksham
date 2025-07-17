@@ -26,7 +26,8 @@ const SignUp = ({ inModal = false, onSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/auth/signup`, {
         name,   // <-- send name
         email,
         password
@@ -197,7 +198,8 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signup', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/auth/signup`, {
         email,
         password
       });

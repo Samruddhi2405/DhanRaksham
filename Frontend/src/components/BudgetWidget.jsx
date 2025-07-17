@@ -35,7 +35,8 @@ const BudgetWidget = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/budget/latest')
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    axios.get(`${backendUrl}/api/budget/latest`)
       .then(res => setBudget(res.data))
       .catch(() => setBudget(null))
       .finally(() => setLoading(false));

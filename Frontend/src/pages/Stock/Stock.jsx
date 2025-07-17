@@ -35,15 +35,16 @@ const Stock = () => {
         risk_level: risk
       };
 
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
       // Try ports in order of priority
-      const ports = [5000];  // 3001 is the primary port
+      const urls = [`${backendUrl}/api/predict-stock`];
       let lastError = null;
 
-      for (const port of ports) {
+      for (const url of urls) {
         try {
-          console.log(`Attempting to connect to port ${port}...`);
+          console.log(`Attempting to connect to: ${url}`);
           const token = localStorage.getItem('token');
-          const response = await fetch(`http://localhost:${port}/api/predict-stock`, {
+          const response = await fetch(url, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -63,12 +64,12 @@ const Stock = () => {
             });
             return; // Success, exit the function
           } else {
-            console.log(`Port ${port} responded with status:`, response.status);
+            console.log(`Port ${url} responded with status:`, response.status);
             const errorText = await response.text();
-            console.log(`Port ${port} error response:`, errorText);
+            console.log(`Port ${url} error response:`, errorText);
           }
         } catch (err) {
-          console.log(`Failed to connect to port ${port}:`, err);
+          console.log(`Failed to connect to port ${url}:`, err);
           lastError = err;
         }
       }

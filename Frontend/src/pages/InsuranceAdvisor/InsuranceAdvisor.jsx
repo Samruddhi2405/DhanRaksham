@@ -161,7 +161,8 @@ const InsuranceAdvisor = () => {
       };
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/predict-insurance', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/predict-insurance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

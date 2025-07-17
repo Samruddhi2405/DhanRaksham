@@ -18,7 +18,8 @@ const SignIn = ({ inModal = false, onSuccess }) => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/signin', {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const response = await axios.post(`${backendUrl}/api/auth/signin`, {
         email,
         password
       });

@@ -10,8 +10,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Check if token exists and fetch user info
     const token = localStorage.getItem('token');
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     if (token) {
-      axios.get('/api/auth/me', {
+      axios.get(`${backendUrl}/api/auth/me`, {
         headers: { Authorization: token }
       })
       .then(res => setUser(res.data))
@@ -24,8 +25,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData, token) => {
     localStorage.setItem('token', token);
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
     try {
-      const res = await axios.get('/api/auth/me', {
+      const res = await axios.get(`${backendUrl}/api/auth/me`, {
         headers: { Authorization: token }
       });
       setUser(res.data);

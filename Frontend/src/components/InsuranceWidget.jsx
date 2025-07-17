@@ -21,7 +21,8 @@ const InsuranceWidget = () => {
       setError('');
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/insurance/latest', {
+        const backendUrl = import.meta.env.VITE_BACKEND_URL;
+        const res = await axios.get(`${backendUrl}/api/insurance/latest`, {
           headers: { Authorization: token }
         });
         setInsurance(res.data);

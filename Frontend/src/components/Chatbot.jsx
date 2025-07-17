@@ -6,7 +6,7 @@ import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
 import './Chatbot.css';
 
-const API_URL = 'http://localhost:5000/api/chatbot/advice';
+const API_URL = `${import.meta.env.VITE_BACKEND_URL}/api/chatbot/advice`;
 
 const Chatbot = () => {
     const [messages, setMessages] = useState([]);
