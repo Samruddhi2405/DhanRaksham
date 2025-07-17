@@ -41,7 +41,7 @@ const app = express();
 // CORS configuration
 console.log('Configuring CORS...');
 app.use(cors({
-    origin: 'http://localhost:5173', // Vite's default port
+    origin: 'https://frontend-jzyw.onrender.com', // Vite's default port
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
