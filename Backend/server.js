@@ -40,10 +40,23 @@ const app = express();
 
 // CORS configuration
 console.log('Configuring CORS...');
+const allowedOrigins = [
+  'http://localhost:5173', // for local dev
+  'https://frontend-jzyw.onrender.com' // your deployed frontend
+];
 app.use(cors({
-    origin: 'https://frontend-jzyw.onrender.com', // Vite's default port
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+  origin: function(origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    } else {
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Middleware
