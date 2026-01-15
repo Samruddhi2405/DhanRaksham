@@ -1,5 +1,5 @@
 pip>=23.3
-setuptools==65.5.1
+setuptools==78.1.1
 wheel==0.40.0
 fastapi==0.104.1
 uvicorn==0.24.0
